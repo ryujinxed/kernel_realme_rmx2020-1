@@ -27,4 +27,13 @@ make -j$(nproc --all) O=out \
                       CONFIG_NO_ERROR_ON_MISMATCH=y
 }
 
+function zupload()
+{
+git clone --depth=1 https://github.com/ryujinxed/AnyKernel3.git AnyKernel
+cp out/arch/arm64/boot/Image.gz-dtb AnyKernel
+cd AnyKernel
+zip -r9 OSS-KERNEL-RMX2020-NEOLIT.zip *
+}
+
 compile
+zupload
