@@ -271,10 +271,10 @@ static unsigned long long g_cpu_remained_time_accum;
 static unsigned long long g_gpu_freq_accum;
 static unsigned int g_frame_count;
 
-static int gx_game_mode;
+static int gx_game_mode = 1;
 static int gx_3D_benchmark_on;
+static int gx_force_cpu_boost = 1;
 #ifdef GED_KPI_CPU_BOOST
-static int gx_force_cpu_boost;
 static int gx_top_app_pid;
 static int enable_game_self_frc_detect;
 #endif
@@ -2151,8 +2151,8 @@ void ged_kpi_set_game_hint(int mode)
 {
 #ifdef MTK_GED_KPI
 	if (mode == 1 || mode == 0) {
-		gx_game_mode = mode;
-		ged_kpi_set_game_hint_value(mode);
+		gx_game_mode = 1;
+		ged_kpi_set_game_hint_value(1);
 	}
 #endif
 }
