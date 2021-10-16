@@ -1538,7 +1538,7 @@ static ssize_t mt_gpufreq_opp_freq_proc_write(struct file *file,
 {
 	char buf[64];
 	unsigned int len = 0;
-	unsigned int value = 0;
+	unsigned int value = 900000;
 	unsigned int i = 0;
 	int ret = -EFAULT;
 
@@ -3075,7 +3075,7 @@ static int __mt_gpufreq_pdrv_probe(struct platform_device *pdev)
 	int ret;
 
 	g_opp_stress_test_state = false;
-	g_keep_opp_freq_state = false;
+	g_keep_opp_freq_state = true;
 
 	node = of_find_matching_node(NULL, g_gpufreq_of_match);
 	if (!node)
