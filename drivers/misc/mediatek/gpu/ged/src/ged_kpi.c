@@ -1304,8 +1304,7 @@ static void ged_kpi_work_cb(struct work_struct *psWork)
 					enable_cpu_boost,
 					psHead->pid == gx_top_app_pid);
 
-			if ((gx_game_mode == 1 || gx_force_cpu_boost == 1)
-				&& enable_cpu_boost == 1) {
+			if (gx_game_mode == 1 || enable_cpu_boost == 1) {
 
 				if (ged_kpi_push_game_frame_time_fp_fbt
 					&& psHead->pid == gx_top_app_pid) {
