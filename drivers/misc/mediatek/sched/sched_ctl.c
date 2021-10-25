@@ -359,7 +359,7 @@ err:
 late_initcall(sched_hint_init);
 
 #ifdef CONFIG_MTK_SCHED_BOOST
-static int sched_boost_type = SCHED_NO_BOOST;
+static int sched_boost_type = SCHED_FG_BOOST;
 
 inline int valid_cpu_prefer(int task_prefer)
 {
