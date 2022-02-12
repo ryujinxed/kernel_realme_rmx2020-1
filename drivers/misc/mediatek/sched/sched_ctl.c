@@ -359,7 +359,7 @@ err:
 late_initcall(sched_hint_init);
 
 #ifdef CONFIG_MTK_SCHED_BOOST
-static int sched_boost_type = SCHED_NO_BOOST;
+const int sched_boost_type = SCHED_ALL_BOOST;
 
 inline int valid_cpu_prefer(int task_prefer)
 {
@@ -406,7 +406,6 @@ inline int hinted_cpu_prefer(int task_prefer)
  */
 int cpu_prefer(struct task_struct *p)
 {
-	if (sched_boost_type == SCHED_ALL_BOOST)
 		return SCHED_PREFER_BIG;
 
 	if (p->cpu_prefer == SCHED_PREFER_LITTLE &&
@@ -568,12 +567,7 @@ int set_sched_boost(unsigned int val)
 
 	mutex_lock(&sched_boost_mutex);
 	/* back to original setting*/
-	if (sched_boost_type == SCHED_ALL_BOOST)
-		sched_scheduler_switch(SCHED_HYBRID_LB);
-	else if (sched_boost_type == SCHED_FG_BOOST)
-		sched_unset_boost_fg();
-
-	sched_boost_type = val;
+	sched_scheduler_switch(SCHED_HYBRID_LB);
 
 	if (val == SCHED_NO_BOOST) {
 		if (sysctl_sched_isolation_hint_enable_backup > 0)
@@ -639,20 +633,8 @@ static ssize_t show_sched_boost(struct kobject *kobj,
 	unsigned int len = 0;
 	unsigned int max_len = 4096;
 
-	switch (sched_boost_type) {
-
-	case SCHED_ALL_BOOST:
-		len += snprintf(buf, max_len, "sched boost= all boost\n\n");
-		break;
-	case SCHED_FG_BOOST:
-		len += snprintf(buf, max_len,
-			"sched boost= foreground boost\n\n");
-		break;
-	default:
-		len += snprintf(buf, max_len, "sched boost= no boost\n\n");
-		break;
-	}
-
+	len += snprintf(buf, max_len, "sched boost= all boost\n\n");
+		
 	return len;
 }
 
